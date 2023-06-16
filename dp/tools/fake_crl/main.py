@@ -353,7 +353,7 @@ logger.setLevel(logging.INFO)
 if __name__ == '__main__':
     # Start Simple CRL Server and waits for user input.
     try:
-        #crl_server_instance = crlServerStart()
+        crl_server_instance = crlServerStart()
         readInput()
         crlServerStop(crl_server_instance)
     except Exception as err:
