@@ -242,18 +242,18 @@ def _build_filter():
         DBRequest.id == None,  # noqa: E711
         or_(
             or_(
-                DBCbsd.should_deregister == True,
-                DBCbsd.should_relinquish == True,
-                DBCbsd.is_deleted == True,
+                DBCbsd.should_deregister is True,
+                DBCbsd.should_relinquish is True,
+                DBCbsd.is_deleted is True,
             ),
             and_(
-                DBCbsd.single_step_enabled == False,
+                DBCbsd.single_step_enabled is False,
                 not_null(multi_step),
             ),
             and_(
-                DBCbsd.single_step_enabled == True,
+                DBCbsd.single_step_enabled is True,
                 DBCbsd.cbsd_category == 'a',
-                DBCbsd.indoor_deployment == True,
+                DBCbsd.indoor_deployment is True,
                 not_null(multi_step + single_step),
             ),
         ),
