@@ -17,7 +17,7 @@ from magma.db_service.utils import get_cbsd_basic_params
 from magma.fluentd_client.client import DPLog
 from magma.mappings.request_response_mapping import request_response
 
-Message = Union['DBRequest', 'DBResponse', 'CBSDRequest', 'CBSDStateResult']
+Message = Union['DBRequest', 'DBResponse', 'CBSDRequest', 'CBSDStateResult']  # noqa: F821
 
 
 def make_dp_log(
