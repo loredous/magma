@@ -10,10 +10,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from typing import Any
-
 from magma.db_service.tests.alembic_testcase import AlembicTestCase
-from sqlalchemy import Table, select
+from sqlalchemy import select
 
 
 class Teste793671a19a6TestCase(AlembicTestCase):
