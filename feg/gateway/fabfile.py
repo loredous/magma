@@ -16,10 +16,10 @@ from typing import Dict, List
 import urllib3
 
 sys.path.append('../../orc8r')
-import tools.fab.dev_utils as dev_utils  # NOQA
-import tools.fab.types as types
-from fabric import Connection, task
-from tools.fab.hosts import vagrant_connection
+import tools.fab.dev_utils as dev_utils  # noqa E402
+import tools.fab.types as types  # noqa E402
+from fabric import Connection, task  # noqa E402
+from tools.fab.hosts import vagrant_connection  # noqa E402
 
 SNOWFLAKE_FEG_FILE = '../../.cache/feg/snowflake'
 NETWORK_ID = 'feg_test'
