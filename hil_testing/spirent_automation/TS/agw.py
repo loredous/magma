@@ -12,15 +12,13 @@ limitations under the License.
 """
 import logging
 import os
-import re
 import subprocess
 import sys
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Union
 
 import ansible_runner
 import attr
 import config
-from TS.aws_lib import AWSbase
 
 ANSIBLE_LOC = os.path.join(
     os.path.dirname(os.path.abspath(sys.path[0])), "Magma_Ansible",
@@ -47,7 +45,7 @@ class SUT_AGW(object):
         self, book: str = None, magma_rel: str = "ci", magma_build: str = "latest",
     ) -> bool:
         """this is dummy mathod, EPC specific class mathod should be used"""
-        logging.info(f"Please use EPC required mathod to upgrade")
+        logging.info("Please use EPC required mathod to upgrade")
         return True
 
     def _run_ansible_role(self, **kwargs: Union[str, int, float]) -> Union[bool, any]:
@@ -98,14 +96,14 @@ class SUT_AGW(object):
 
     def get_build_info(self, role: str = None) -> Union[bool, str]:
         """Use EPC specific class mathod"""
-        logging.warn(f"Please use EPC specific mathod to retrive SW version")
+        logging.warn("Please use EPC specific mathod to retrive SW version")
         return True
 
     def sut_magma_state_check(self, role: str = None) -> Dict[str, int]:
         """
         Use EPC specific health check
         """
-        logging.info(f"EPC specific health check needs to be used")
+        logging.info("EPC specific health check needs to be used")
         return config.MAGMA_AGW.get("UE_STATE", {})
 
     def sut_check(self, sut_res: any = None, key: str = None) -> Dict[str, any]:
@@ -152,7 +150,7 @@ class SUT_AGW(object):
 
         res = self._run_ansible_role(role=role, extra_vars=self.e_vars)
         if res:
-            logging.info(f"SUT restarted Successfully")
+            logging.info("SUT restarted Successfully")
             return True
         else:
             return False
