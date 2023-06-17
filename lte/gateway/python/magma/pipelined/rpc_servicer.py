@@ -572,7 +572,7 @@ class PipelinedRpcServicer(pipelined_pb2_grpc.PipelinedServicer):
             return None
 
         fut = Future()
-        self._loop.call_soon_threadsafe(\
+        self._loop.call_soon_threadsafe(
             self._setup_pg_tunnel_update, request, fut,
         )
         try:
@@ -924,7 +924,7 @@ class PipelinedRpcServicer(pipelined_pb2_grpc.PipelinedServicer):
             return UPFSessionContextState()
 
         fut = Future()
-        self._loop.call_soon_threadsafe(\
+        self._loop.call_soon_threadsafe(
             self.ng_update_session_flows, request, fut,
         )
         try:
@@ -970,7 +970,7 @@ class PipelinedRpcServicer(pipelined_pb2_grpc.PipelinedServicer):
                     offending_ie = OffendingIE(
                         identifier=pdr_entries.pdr_id,
                         version=pdr_entries.pdr_version,
-                        qos_enforce_rule_results=ActivateFlowsResult(\
+                        qos_enforce_rule_results=ActivateFlowsResult(
                             policy_results=[failed_policy_rule_results],
                         ),
                     )

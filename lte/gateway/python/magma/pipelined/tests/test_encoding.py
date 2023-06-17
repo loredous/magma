@@ -34,7 +34,6 @@ class EncodingTest(unittest.TestCase):
         """
         msisdn = '5521966054601'
         key = 'C14r0315v0x'
-        mac = 'qqqqq12345'
 
         hash = get_hash(key, PipelineD.HEConfig.MD5)
         self.assertEqual(hash, b'7\xee@\xee\xcbHAf\xd6\x8c)\x93\x0eH1<')

@@ -135,7 +135,7 @@ class NGServiceControllerTest(unittest.TestCase):
         # Assume that the Association is established
         node_mgr._smf_assoc_state = UPFAssociationState.ESTABLISHED
 
-        assoc_message = self._default_settings(mocked_send_node_state_message_failure)
+        self._default_settings(mocked_send_node_state_message_failure)
         node_mgr.send_association_release_message()
 
         TestCase().assertEqual(node_mgr._smf_assoc_version, 0)

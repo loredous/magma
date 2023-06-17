@@ -15,7 +15,7 @@ import abc
 import logging
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
-from scapy.all import rdpcap, sendp, srp, wrpcap
+from scapy.all import rdpcap, sendp, srp, wrpcap # noqa E402
 
 
 class PacketInjector(metaclass=abc.ABCMeta):

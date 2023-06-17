@@ -15,7 +15,7 @@ import unittest
 import warnings
 from concurrent.futures import Future
 
-from magma.pipelined.app import egress, ingress, middle
+from magma.pipelined.app import egress, middle
 from magma.pipelined.bridge_util import BridgeTools
 from magma.pipelined.tests.app.start_pipelined import (
     PipelinedController,

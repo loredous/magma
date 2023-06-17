@@ -84,10 +84,10 @@ def pdr_create_rule_entry(pdr_entry) -> PDRRuleEntry:
     if len(pdr_entry.set_gr_far.ListFields()):
         far_entry = far_create_rule_entry(pdr_entry.set_gr_far)
 
-    if pdr_entry.HasField('deactivate_flow_req') == True:
+    if pdr_entry.HasField('deactivate_flow_req') is True:
         deactivate_flow_req = pdr_entry.deactivate_flow_req
 
-    if pdr_entry.HasField('activate_flow_req') == True:
+    if pdr_entry.HasField('activate_flow_req') is True:
         activate_flow_req = pdr_entry.activate_flow_req
 
     if pdr_entry.session_qfi:

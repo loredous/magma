@@ -15,7 +15,7 @@ import abc
 import logging
 
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
-from scapy.all import (
+from scapy.all import ( # noqa E402 
     ARP,
     BOOTP,
     DHCP,
