@@ -1014,11 +1014,11 @@ class Classifier(MagmaController):
             )
 
         if (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.ACTIVE
         ):
             result = self._validate_ue_session(request)
-            if result == False:
+            if result is False:
                 cause_ie = CauseIE.RULE_CREATION_OR_MODIFICATION_FAILURE
             else:
                 res = self.add_tunnel_flows(
@@ -1033,7 +1033,7 @@ class Classifier(MagmaController):
                 )
 
         elif (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.UNREGISTERED
         ):
             res = self.delete_tunnel_flows(
@@ -1044,13 +1044,13 @@ class Classifier(MagmaController):
             )
 
         elif (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.UNINSTALL_IDLE
         ):
             res = self.remove_paging_flow(ue_ipv4_address)
 
         elif (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.INSTALL_IDLE
         ):
             res = self.install_paging_flow(
@@ -1060,7 +1060,7 @@ class Classifier(MagmaController):
             )
 
         elif (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.RESUME_DATA
         ):
             res = self.resume_tunnel_flows(
@@ -1070,7 +1070,7 @@ class Classifier(MagmaController):
             )
 
         elif (
-            request.ue_session_state.ue_config_state == \
+            request.ue_session_state.ue_config_state ==
             UESessionState.SUSPENDED_DATA
         ):
             res = self.discard_tunnel_flows(
@@ -1079,27 +1079,25 @@ class Classifier(MagmaController):
                 request.ip_flow_dl,
             )
 
-        if res == False:
+        if res is False:
             cause_ie = CauseIE.RULE_CREATION_OR_MODIFICATION_FAILURE
 
-        return(
-            UESessionContextResponse(
-                ue_ipv4_address=request.ue_ipv4_address,
-                ue_ipv6_address=request.ue_ipv6_address,
-                operation_type=request.ue_session_state.ue_config_state,
-                cause_info=CauseIE(cause_ie=cause_ie),
-            )
+        return UESessionContextResponse(
+            ue_ipv4_address=request.ue_ipv4_address,
+            ue_ipv6_address=request.ue_ipv6_address,
+            operation_type=request.ue_session_state.ue_config_state,
+            cause_info=CauseIE(cause_ie=cause_ie),
         )
 
     def _validate_ue_session(self, tunnel_msg: UESessionSet) -> bool:
 
         if (
-            len(tunnel_msg.subscriber_id.id) == 0 or \
+            len(tunnel_msg.subscriber_id.id) == 0 or
             (tunnel_msg.subscriber_id.type) != SubscriberID.IMSI
         ):
             return False
 
-        if ((tunnel_msg.ue_ipv4_address is None) and \
+        if ((tunnel_msg.ue_ipv4_address is None) and
                 (tunnel_msg.ue_ipv6_address is None)):
             return False
 

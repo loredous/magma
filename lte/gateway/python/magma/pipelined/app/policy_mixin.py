@@ -323,10 +323,12 @@ class PolicyMixin(metaclass=ABCMeta):
                 units = "kbit"
 
             self.logger.debug("ambr: %s, apn_ambr.br_unit :%s, units : %s", ambr, apn_ambr.br_unit, units)
-            cleanup_rule_func = lambda: self._invalidate_rule_version(
-                imsi,
-                ip_addr, rule_id,
-            )
+
+            def cleanup_rule_func():
+                self._invalidate_rule_version(
+                    imsi,
+                    ip_addr, rule_id,
+                )
             action, inst, qos_handle = qos_mgr.add_subscriber_qos(
                 imsi, ip_addr.address.decode('utf8'), ambr, units, rule_num, d,
                 qos_info, cleanup_rule_func,

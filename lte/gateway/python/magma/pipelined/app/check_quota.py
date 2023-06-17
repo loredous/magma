@@ -347,4 +347,4 @@ class CheckQuotaController(MagmaController):
     def _delete_all_flows(self, datapath: Datapath):
         flows.delete_all_flows_from_table(datapath, self.tbl_num)
         flows.delete_all_flows_from_table(datapath, self.ip_rewrite_scratch)
-        #flows.delete_all_flows_from_table(datapath, self.mac_rewrite_scratch)
+        # flows.delete_all_flows_from_table(datapath, self.mac_rewrite_scratch)
