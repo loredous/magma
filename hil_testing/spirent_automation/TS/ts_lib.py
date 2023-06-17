@@ -13,11 +13,9 @@ limitations under the License.
 import importlib
 import json
 import logging
-import math
 import os
 import random
 import re
-import statistics
 import subprocess
 import sys
 import time
@@ -32,7 +30,7 @@ import get_ports
 import pyshark
 import requests
 from jinja2 import Template
-from netaddr import *
+from netaddr import EUI
 from TS.kpi_lib import cruncher
 
 
@@ -91,7 +89,10 @@ class TSBase(object):
                 "POST", self.url, data=json.dumps(payload), auth=self.auth,
             )
             return json.loads(response.text)
-        except:
+        except Exception as e:
+            logging.warning(
+                f"Error Running test case on spirent {e} response {response}. Retrying",
+            )
             try:
                 time.sleep(10)
                 response = requests.request(
@@ -118,7 +119,8 @@ class TSBase(object):
                 _ue_state_verification[k] = False
         return _ue_state_verification
 
-    def check_test_summary(self, **kwargs: Union[str, int, float]) -> Dict[str, any]:
+    # TODO: Simplify check_test_summary and convert to class if necessary
+    def check_test_summary(self, **kwargs: Union[str, int, float]) -> Dict[str, any]:  # noqa C901
         """check test summary with expected result and gives verdict"""
 
         def _s1ap_check(s1ap: Dict[str, any]) -> Dict[str, bool]:
@@ -717,7 +719,7 @@ class TSBase(object):
         logging.debug(f"Stop running test with id {str(id)}, as it seems stuck")
         url = self.url + "/" + str(id) + "?action=stop"
         payload = {}
-        response = requests.request(
+        requests.request(
             "POST", url, data=json.dumps(payload), auth=self.auth,
         )
 
@@ -1294,7 +1296,7 @@ class TSBase(object):
                         "http://"
                         + config.TAS.get("tas_ip")
                         + ":8080/api/runningTests/"
-                        + run_id
+                        + kwargs["id"]
                         + "?action=abort"
                     )
                     abort = requests.request(
