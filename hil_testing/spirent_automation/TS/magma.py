@@ -13,9 +13,8 @@ limitations under the License.
 import logging
 import os
 import re
-import subprocess
 import sys
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Union
 
 import ansible_runner
 import attr
@@ -48,7 +47,7 @@ class magma(SUT_AGW):
                     self.e_vars["sctpd_build"] = sctpd_build
                     self.e_vars["Magma_build"] = magma_build
                 else:
-                    logging.error(f"Magma Build format is not proper")
+                    logging.error("Magma Build format is not proper")
                     return False
             except Exception as e:
                 logging.error(f"Error while creating sctpd build url {e}")
@@ -75,11 +74,11 @@ class magma(SUT_AGW):
         """This method would retrive running magma sw build information"""
         res = self._run_ansible_role(role=role, extra_vars=self.e_vars)
         if res:
-            logging.info(f"MAGMA SW retrieved Successfully")
+            logging.info("MAGMA SW retrieved Successfully")
             _sw_ver = res.get_fact_cache(self.sut)["agw_magma_build"].strip()
             return _sw_ver if _sw_ver else False
         else:
-            logging.info(f"MAGMA sw retrieval failed")
+            logging.info("MAGMA sw retrieval failed")
             return False
 
     def sut_magma_state_check(self, role: str = None) -> Dict[str, int]:
@@ -106,13 +105,12 @@ class magma(SUT_AGW):
         pid_dict = {}
 
         if sut_res:
-            logging.info(f"MAGMA check in progress")
+            logging.info("MAGMA check in progress")
             sanitized = sut_res.get_fact_cache(self.sut)["magma_pid_mem_values"].split(
                 "\n",
             )
             output = [n for n in sanitized if n != ""]
-            output_dict = {}
-            pattern = pattern = "magma@(.*.)\.service"
+            pattern = pattern = r"magma@(.*.)\.service"
             for n in range(len(output)):
                 if "magma" in output[n]:
                     key = re.search(pattern, output[n]).group(1)
