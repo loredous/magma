@@ -129,7 +129,7 @@ class DpProbe:
         output = subprocess.check_output(cmd)
         output_str = str(output, "utf-8").strip()
         pattern = "IMSI.*?" + imsi + \
-            ".*?([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})"
+            r".*?([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})"
         match = re.search(pattern, output_str)
         if match:
             return match.group(1)
@@ -212,7 +212,7 @@ class DpProbe:
         print("Running: " + " ".join(cmd))
         output = subprocess.check_output(cmd)
         output_str = str(output, "utf-8").strip()
-        pattern = "Datapath\sactions:(.*)"
+        pattern = r"Datapath\sactions:(.*)"
         match = re.search(pattern, output_str)
         if match:
             return match.group(1).strip()
@@ -250,7 +250,7 @@ class DpProbe:
         output = str(output, "utf-8").strip()
 
         if args.direction == "DL":
-            pattern = ".*table=enforcement\(main_table\).*nw_dst=" + \
+            pattern = r".*table=enforcement\(main_table\).*nw_dst=" + \
                 self.ue_ip + " actions=note:b\'(.*)\',load.*"
             rules_dl = re.findall(pattern, output)
             if len(rules_dl) > 0:
@@ -258,7 +258,7 @@ class DpProbe:
             else:
                 print("No downlink rules found for UE")
         elif args.direction == "UL":
-            pattern = ".*table=enforcement\(main_table\).*nw_src=" + \
+            pattern = r".*table=enforcement\(main_table\).*nw_src=" + \
                 self.ue_ip + " actions=note:b\'(.*)\',load.*"
             rules_ul = re.findall(pattern, output)
             if len(rules_ul) > 0:
@@ -301,7 +301,7 @@ class DpProbe:
         cmd = ["ovs-ofctl", "show", "gtp_br0"]
         output = subprocess.check_output(cmd)
         output = str(output, "utf-8").strip()
-        pattern = "([0-9]{1,})\(mtr0\)"
+        pattern = r"([0-9]{1,})\(mtr0\)"
         match_mtr0 = re.findall(pattern, output)
         if match_mtr0:
             return match_mtr0[0]
