@@ -59,12 +59,10 @@ class GatewayServicesUtil(object):
                 used to detect a restart after a command. Defaults to 0 because
                 all services by default start after 0 seconds since epoch
         """
-        assert(self._mme_service.wait_for_healthy_service(after_start_time))
+        assert self._mme_service.wait_for_healthy_service(after_start_time)
         # Mobilityd comes up after mme, so wait for this too
-        assert(
-            self._mobilityd_service.wait_for_healthy_service(
-                after_start_time,
-            )
+        assert self._mobilityd_service.wait_for_healthy_service(
+            after_start_time,
         )
 
     def get_service_by_name(self, service_name):
