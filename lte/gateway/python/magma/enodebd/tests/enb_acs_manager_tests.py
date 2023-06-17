@@ -83,7 +83,7 @@ class StateMachineManagerTests(TestCase):
         ctx1 = get_spyne_context_with_ip("192.168.60.145")
         ctx2 = get_spyne_context_with_ip("192.168.60.99")
 
-        ##### Start session for the first IP #####
+        # #### Start session for the first IP #####
         # Send an Inform message, wait for an InformResponse
         inform_msg = Tr069MessageBuilder.get_inform(
             '48BF74',
@@ -112,7 +112,7 @@ class StateMachineManagerTests(TestCase):
             'State machine should be requesting param values',
         )
 
-        ##### Start session for the second IP #####
+        # #### Start session for the second IP #####
         # Send an Inform message, wait for an InformResponse
         inform_msg = Tr069MessageBuilder.get_inform(
             '48BF74',
@@ -125,7 +125,7 @@ class StateMachineManagerTests(TestCase):
             'Should respond with an InformResponse',
         )
 
-        ##### Continue session for the first IP #####
+        # #### Continue session for the first IP #####
         req1 = Tr069MessageBuilder.get_fault()
         resp1 = manager.handle_tr069_message(ctx1, req1)
         self.assertTrue(
@@ -140,7 +140,7 @@ class StateMachineManagerTests(TestCase):
             'State machine should be requesting param values',
         )
 
-        ##### Continue session for the second IP #####
+        # #### Continue session for the second IP #####
         # Send an empty http request to kick off the rest of provisioning
         req2 = models.DummyInput()
         resp2 = manager.handle_tr069_message(ctx2, req2)

@@ -560,7 +560,7 @@ def _read_gps_coords_from_file():
                     len(lines),
                 )
                 return '0', '0'
-            return tuple(map(lambda l: l.strip(), lines))
+            return tuple(map(lambda line: line.strip(), lines))
     except OSError:
         logger.warning('Could not open cached GPS coordinate file')
         return '0', '0'

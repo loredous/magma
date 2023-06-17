@@ -66,7 +66,7 @@ class EnodebConfigBuilder:
         mconfig.tdd_config.special_subframe_pattern = 7
 
         id1 = '120200002618AGP0003'
-        #enb_conf_1 = mconfigs_pb2.EnodebD.EnodebConfig()
+        # enb_conf_1 = mconfigs_pb2.EnodebD.EnodebConfig()
         mconfig.enb_configs_by_serial[id1]\
             .earfcndl = 39151
         mconfig.enb_configs_by_serial[id1]\
@@ -87,7 +87,7 @@ class EnodebConfigBuilder:
             .device_class = 'Baicells Band 40'
 
         id2 = '120200002618AGP0004'
-        #enb_conf_2 = mconfigs_pb2.EnodebD.EnodebConfig()
+        # enb_conf_2 = mconfigs_pb2.EnodebD.EnodebConfig()
         mconfig.enb_configs_by_serial[id2]\
             .earfcndl = 39151
         mconfig.enb_configs_by_serial[id2]\

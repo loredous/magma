@@ -356,7 +356,7 @@ def on_method_return_string(ctx):
     # Special-case handling so that 'EmptyHttp' RPC will be called using
     # completely empty HTTP request (not even containing a SOAP envelope), as
     # per TR-069 spec.
-    if(ctx.descriptor.out_message.Attributes.sub_name == 'EmptyHttp'):
+    if ctx.descriptor.out_message.Attributes.sub_name == 'EmptyHttp':
         ctx.out_string = [b'']
 
 
