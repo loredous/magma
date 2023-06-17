@@ -14,11 +14,11 @@ limitations under the License.
 import subprocess
 import sys
 
-from fabric import Connection, task
+from fabric import task
 
 sys.path.append('../../../../../orc8r')
-import tools.fab.dev_utils as dev_utils
-from tools.fab.hosts import vagrant_connection, vagrant_setup
+import tools.fab.dev_utils as dev_utils # noqa E402
+from tools.fab.hosts import vagrant_connection, vagrant_setup # noqa E402
 
 magma_path = "../../../../../"
 orc8_docker_path = magma_path + "orc8r/cloud/docker/"
