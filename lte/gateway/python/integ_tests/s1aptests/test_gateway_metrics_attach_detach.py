@@ -129,7 +129,7 @@ class TestGatewayMetricsAttachDetach(unittest.TestCase):
                 "ue_detach",
                 label_values_success,
             )
-            assert(val == v_ue_detach + 1)
+            assert val == v_ue_detach + 1
 
             val = self._getMetricValueGivenLabel(
                 "spgw_delete_session",
