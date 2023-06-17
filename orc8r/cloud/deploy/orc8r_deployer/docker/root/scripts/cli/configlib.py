@@ -230,7 +230,6 @@ class ConfigManager(object):
         for config_key, config_info in self.config_vars[component].items():
             # add defaults to configs inorder to run prechecks
             default = config_info.get('Default')
-            typ = config_info.get('Type')
             if default is not None:
                 curr_val = cfgs.get(config_key)
 

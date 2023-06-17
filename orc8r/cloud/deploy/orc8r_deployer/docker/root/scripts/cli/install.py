@@ -63,7 +63,7 @@ def tf_install(
                 break
             print_error_msg(f"Install failed when running {cmd} !!!")
             if i == (max_retries - 1):
-                print_error_msg(f"Max retries exceeded!!!")
+                print_error_msg("Max retries exceeded!!!")
                 return 1
 
         # set the kubectl after bringing up the infra
@@ -100,7 +100,7 @@ def install(ctx):
         if click.confirm('Do you want to run installation prechecks?'):
             ctx.invoke(precheck)
         else:
-            print_warning_msg(f"Skipping installation prechecks")
+            print_warning_msg("Skipping installation prechecks")
 
         tf_install(ctx.obj)
 

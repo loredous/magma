@@ -10,14 +10,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from typing import List
-
 import click
 from cli.certs import certs
 from cli.cleanup import cleanup
 from cli.configure import configure
 from cli.install import install
-from cli.style import print_error_msg
 from cli.upgrade import upgrade
 from cli.verify import verify
 from utils.common import init

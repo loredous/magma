@@ -55,7 +55,7 @@ class UpgraderGauges(NamedTuple):
     idle: Gauge
 
 
-_GAUGES = None  # type: Optional[UpgraderGauges]
+_GAUGES: "Optional[UpgraderGauges]" = None
 
 
 def get_gauges() -> UpgraderGauges:
@@ -168,7 +168,7 @@ class Upgrader2(Upgrader, metaclass=abc.ABCMeta):
 
     def __init__(self, service: MagmaService) -> None:
         self.service = service
-        self.upgrade_task = None  # type: Optional[asyncio.Task]
+        self.upgrade_task: "Optional[asyncio.Task]" = None
 
     @property
     def loop(self) -> asyncio.AbstractEventLoop:

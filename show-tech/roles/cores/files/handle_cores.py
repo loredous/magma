@@ -98,7 +98,7 @@ class CoreFile(object):
         logger.info("component {} core {} - dbg output file: {}".format(self.app_binary, self.uncompressed_core_file, dbg_file))
 
         with open(dbg_file, 'a') as fout:
-            ret = subprocess.run(
+            subprocess.run(
                 shlex.split(cmd),
                 check=True,
                 stdout=fout,

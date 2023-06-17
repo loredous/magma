@@ -34,7 +34,7 @@ def main():
 
         # read event payload
         headers = dict(x.split(':') for x in line.split())
-        data = sys.stdin.read(int(headers['len']))
+        sys.stdin.read(int(headers['len']))
 
         # transition from READY to ACKNOWLEDGED
         write_stdout('RESULT 2\nOK')

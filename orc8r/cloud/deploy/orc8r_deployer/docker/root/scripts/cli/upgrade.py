@@ -34,7 +34,7 @@ def upgrade(ctx):
         if click.confirm('Do you want to run upgrade prechecks?'):
             ctx.invoke(precheck)
         else:
-            print_warning_msg(f"Skipping upgrade prechecks")
+            print_warning_msg("Skipping upgrade prechecks")
 
         click.echo(
             "Following commands will be run during upgrade\n%s" % (
