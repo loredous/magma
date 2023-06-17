@@ -13,13 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import json
-import sys
-import warnings
-from ipaddress import ip_address
 
 import requests
 from get_ports import get
-from netaddr import *
+from netaddr import EUI, mac_unix_expanded
 
 
 def input_validation(input_dict):
@@ -64,9 +61,10 @@ def get_library_id(name, tas_ip, auth):
     try:
         for n in output["libraries"]:
             if name in n["name"]:
-                library_id = n["id"]
-        return str(library_id)
-    except:
+                return str(n["id"])
+    except Exception:  # TODO: This should be narrowed down and logged
+        pass
+    finally:
         return sorry
 
 
