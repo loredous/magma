@@ -14,7 +14,7 @@ import logging
 from typing import Any, List, Optional
 
 # there's a cyclic dependency in ryu
-import ryu.base.app_manager  # pylint: disable=unused-import
+import ryu.base.app_manager  # noqa F401
 from magma.common.sentry import EXCLUDE_FROM_ERROR_MONITORING
 from magma.pipelined.metrics import DP_SEND_MSG_ERROR
 from magma.pipelined.openflow.exceptions import (
