@@ -12,9 +12,6 @@ limitations under the License.
 """
 import logging
 import os
-import pprint
-import sys
-import time
 from typing import Dict, Tuple, Union
 
 import attr
