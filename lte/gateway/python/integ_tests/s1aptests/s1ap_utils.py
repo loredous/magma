@@ -1730,8 +1730,8 @@ class MagmadUtil(object):
         with open(mconfig_conf, "r") as json_file:
             data = json.load(json_file)
 
-        in_mme_enabled = data["configs_by_key"]["mme"]["natEnabled"] == True
-        in_pipelined_enabled = data["configs_by_key"]["pipelined"]["natEnabled"] == True
+        in_mme_enabled = data["configs_by_key"]["mme"]["natEnabled"] is True
+        in_pipelined_enabled = data["configs_by_key"]["pipelined"]["natEnabled"] is True
 
         return in_mme_enabled and in_pipelined_enabled
 
@@ -2319,7 +2319,7 @@ class SessionManagerUtil(object):
                 Void(),
                 DEFAULT_GRPC_TIMEOUT,
             )
-        except grpc.RpcError as e:
+        except grpc.RpcError as err:
             print(
                 f"error: couldnt print directoryd content. "
                 f"gRPC failed with {err.code()} {err.details()}",
