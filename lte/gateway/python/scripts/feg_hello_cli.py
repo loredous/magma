@@ -47,7 +47,7 @@ def print_stats(resp, start_time, end_time):
 
     print('\n- Stats:')
     print(f'  * Total time: {total_time} ms')
-    print(f'  * Approximate path (ms):')
+    print('  * Approximate path (ms):')
     print(
         f'    ┌─────┐─> {   a} ─>┌───────┐-> {   b} ─>┌─────┐\n'
         f'    │ AGW │            │ Orc8r │            │ Feg │\n'

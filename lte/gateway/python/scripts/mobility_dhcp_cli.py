@@ -13,10 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-"""
-CLI for dhclient
-"""
-
 import argparse
 import ipaddress
 import random
@@ -27,6 +23,11 @@ from magma.mobilityd import mobility_store as store
 from magma.mobilityd.dhcp_desc import DHCPDescriptor, DHCPState
 from magma.mobilityd.mac import MacAddress
 from magma.mobilityd.uplink_gw import UplinkGatewayInfo
+
+
+"""
+CLI for dhclient
+"""
 
 
 class DhcpClientCLI:
