@@ -658,7 +658,7 @@ def send_stats_request(
     cookie_mask: int = 0, retries: int = 3,
 ):
     """
-    Send a stats request msg 
+    Send a stats request msg
     Args:
         datapath (ryu.controller.controller.Datapath):
             Datapath to query from
