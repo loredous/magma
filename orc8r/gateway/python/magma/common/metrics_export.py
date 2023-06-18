@@ -187,6 +187,6 @@ def _convert_labels_to_pb_pairs(labels: List) -> List[metrics_pb2.LabelPair]:
     Arguments:
         labels: an array of label pairs with name and value properties
     Returns:
-        an array of protobuf LabelPair objects with name and value properties 
+        an array of protobuf LabelPair objects with name and value properties
     """
     return [metrics_pb2.LabelPair(name=name, value=value) for name, value in labels]

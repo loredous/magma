@@ -14,7 +14,6 @@ limitations under the License.
 import ctypes
 import inspect
 import os
-import re
 import time
 from typing import List
 

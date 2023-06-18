@@ -20,7 +20,7 @@ from lte.protos.mobilityd_pb2 import IPAddress
 from magma.pipelined.app.classifier import Classifier
 from magma.pipelined.bridge_util import BridgeTools
 from magma.pipelined.openflow.magma_match import MagmaMatch
-from magma.pipelined.tests.app.flow_query import RyuDirectFlowQuery as FlowQuery
+from magma.pipelined.tests.app.flow_query import RyuDirectFlowQuery
 from magma.pipelined.tests.app.packet_injector import ScapyPacketInjector
 from magma.pipelined.tests.app.start_pipelined import (
     PipelinedController,
@@ -180,23 +180,21 @@ class PagingTest(unittest.TestCase):
         gtp_packet_tcp = eth / ip / o_udp / GTP_U_Header(teid=0x1, length=68, gtp_type=255) / i_ip / i_tcp
 
         # Check if these flows were added (queries should return flows)
-        flow_queries = [
-            FlowQuery(
-                self._tbl_num, self.testing_controller,
-                match=MagmaMatch(tunnel_id=1, in_port=32768),
-            ),
-            FlowQuery(
-                self._tbl_num, self.testing_controller,
-                match=MagmaMatch(ipv4_dst='192.168.128.30'),
-            ),
-        ]
+        RyuDirectFlowQuery(
+            self._tbl_num, self.testing_controller,
+            match=MagmaMatch(tunnel_id=1, in_port=32768),
+        )
+        RyuDirectFlowQuery(
+            self._tbl_num, self.testing_controller,
+            match=MagmaMatch(ipv4_dst='192.168.128.30'),
+        )
         # =========================== Verification ===========================
         # Verify 2 flows installed for classifier table (2 pkts matched)
 
         flow_verifier = FlowVerifier(
             [
                 FlowTest(
-                    FlowQuery(
+                    RyuDirectFlowQuery(
                         self._tbl_num,
                         self.testing_controller,
                     ), 2, 2,

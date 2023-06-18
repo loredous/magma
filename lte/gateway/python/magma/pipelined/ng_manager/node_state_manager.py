@@ -88,7 +88,7 @@ class NodeStateManager:
 
     def _send_messsage_wrapper(self, node_message):
         return send_node_state_association_request(
-            node_message,\
+            node_message,
             self._sessiond_setinterface,
         )
 
@@ -97,7 +97,7 @@ class NodeStateManager:
         node_message = UPFNodeState(upf_id=self._node_id)
         node_message.associaton_state.CopyFrom(assoc_message)
 
-        if self._send_messsage_wrapper(node_message) == True:
+        if self._send_messsage_wrapper(node_message) is True:
             self._smf_assoc_state = assoc_message.assoc_state
 
             if self._smf_assoc_state != UPFAssociationState.RELEASE:
@@ -138,11 +138,11 @@ class NodeStateManager:
         retry_count = 0
         assoc_established = False
 
-        while assoc_established == False:
+        while assoc_established is False:
             assoc_established =\
                 self._send_association_request_message(assoc_message)
 
-            if assoc_established == False:
+            if assoc_established is False:
                 retry_count += 1
 
                 if retry_count == self.ASSOC_MAX_RETRIES:

@@ -11,7 +11,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import unittest
-from time import sleep
 
 import s1ap_types
 import s1ap_wrapper

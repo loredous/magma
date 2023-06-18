@@ -41,7 +41,7 @@ class EnodebStatusTests(TestCase):
             'Should report no eNB connected',
         )
 
-        ##### Start session for the first IP #####
+        # #### Start session for the first IP #####
         ctx1 = get_spyne_context_with_ip("192.168.60.145")
         # Send an Inform message, wait for an InformResponse
         inform_msg = Tr069MessageBuilder.get_inform(
@@ -96,11 +96,11 @@ class EnodebStatusTests(TestCase):
     def test_get_enodeb_all_status(self):
         manager = self._get_manager()
 
-        ##### Test Empty #####
+        # #### Test Empty #####
         enb_status_by_serial = get_all_enb_status(manager)
         self.assertTrue(enb_status_by_serial == {}, "No eNB connected")
 
-        ##### Start session for the first IP #####
+        # #### Start session for the first IP #####
         ctx1 = get_spyne_context_with_ip("192.168.60.145")
         # Send an Inform message, wait for an InformResponse
         inform_msg = Tr069MessageBuilder.get_inform(

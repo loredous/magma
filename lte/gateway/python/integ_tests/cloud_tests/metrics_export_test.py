@@ -32,7 +32,7 @@ class TestHTTPServerRequestHandler(BaseHTTPRequestHandler):
         post_body_dict = parse.parse_qs(parse.unquote(post_body.decode('utf-8')))
 
         # Sanity check request, make sure it has the key 'datapoints'
-        assert(len(post_body_dict['datapoints'][0]) > 0)
+        assert len(post_body_dict['datapoints'][0]) > 0
         print("Metrics export valid")
 
         # Send success response to cloud

@@ -19,9 +19,9 @@ import urllib3
 from fabric import Connection, task
 
 sys.path.append('../../orc8r')
-import tools.fab.dev_utils as dev_utils
-import tools.fab.types as types
-from tools.fab.hosts import vagrant_connection
+import tools.fab.dev_utils as dev_utils # noqa 402
+import tools.fab.types as types # noqa 402
+from tools.fab.hosts import vagrant_connection # noqa 402
 
 LTE_NETWORK_TYPE = 'lte'
 FEG_LTE_NETWORK_TYPE = 'feg_lte'
@@ -234,9 +234,9 @@ def _register_agw(
     )
     if already_registered:
         print()
-        print(f'===========================================')
+        print('===========================================')
         print(f'VM is already registered as {registered_as}')
-        print(f'===========================================')
+        print('===========================================')
         return
 
     gw_id = dev_utils.get_next_available_gateway_id(
@@ -265,9 +265,9 @@ def _register_agw(
         admin_cert=admin_cert,
     )
     print()
-    print(f'=========================================')
+    print('=========================================')
     print(f'Gateway {gw_id} successfully provisioned!')
-    print(f'=========================================')
+    print('=========================================')
 
 
 def _deregister_agw(c: Connection, network_type: str):
@@ -287,7 +287,7 @@ def _deregister_agw(c: Connection, network_type: str):
     print()
     print('=========================================')
     print(f'AGW Gateway {registered_as} successfully removed!')
-    print(f'(restart AGW services on magma vm)')
+    print('(restart AGW services on magma vm)')
     print('=========================================')
 
 

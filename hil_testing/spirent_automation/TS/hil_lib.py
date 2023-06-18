@@ -10,30 +10,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-import argparse
 import glob
 import importlib
 import json
 import logging
 import os
 import pickle
-import pprint
 import subprocess
 import sys
 import time
-from datetime import datetime
-from typing import Dict, List, Union
+from typing import Dict
 
-import ansible_runner
 import attr
 import config
 import jinja2
-import pytz
 import texttable
 from anybadge import Badge
-from pytz import timezone
 from requests.auth import HTTPBasicAuth
-from TS.agw import SUT_AGW
 from TS.aws_lib import AWSbase
 from TS.kpi_lib import cruncher
 from TS.slack import SlackSender
@@ -44,8 +37,8 @@ sys.path.append(
         os.path.dirname(os.path.abspath(sys.path[0])), "Magma_Automations/scripts",
     ),
 )
-import base
-import get_ports
+import base  # noqa E402
+import get_ports  # noqa E402
 
 # TODO we should create separate library for CI automation, this would not change
 LIBRARY_NAME = "sms/AGW Scale"
@@ -82,7 +75,8 @@ class hil_lib(object):
         """
         subprocess.call([cmd], shell=True)
 
-    def hil_run(self):
+    # TODO This function needs to be cleaned up and made easier to read
+    def hil_run(self):  # noqa: C901
         subprocess.call(["rm -f /tmp/test_res_pickle"], shell=True)
         if self.args.credentials_file:
             try:
@@ -116,7 +110,6 @@ class hil_lib(object):
         library_id = base.get_library_id(LIBRARY_NAME, config.TAS.get("tas_ip"), auth)
         test_summary = {}
         test_run_info = {}
-        initial_magma_checks = {}
         try:
             sut_mod = importlib.import_module(
                 config.HIL.get("TEST_LIB_PATH") + "." + self.args.epc,
@@ -138,7 +131,7 @@ class hil_lib(object):
                 magma_rel=self.args.rel,
                 magma_build=self.args.build,
             ):
-                logging.info(f" SUT SW upgrade Failed or no new build available")
+                logging.info(" SUT SW upgrade Failed or no new build available")
                 if not self.args.build_check:
                     sys.exit(0)
 
@@ -146,7 +139,7 @@ class hil_lib(object):
 
         if self.args.reboot:
             if not sut.reboot(role="reboot"):
-                logging.error(f" SUT SW reboot timeout - Exiting!!!")
+                logging.error(" SUT SW reboot timeout - Exiting!!!")
                 sys.exit(1)
 
         if cur_sw_ver:
@@ -242,7 +235,7 @@ class hil_lib(object):
             )
 
             for p_names in post_magma_pid.keys():
-                if not "core_files" in p_names:
+                if "core_files" not in p_names:
                     """
                     initial core_files will always be "NO_CORE"; detect_failed_procedure resets
                     after every TC is run.
@@ -251,7 +244,7 @@ class hil_lib(object):
 
         # Get log from sut for all required processes
         test_suite = self.args.test_suite.lower()
-        log_result = sut.get_logs(
+        sut.get_logs(
             role="get-logs",
             start=self.now_pt,
             processes=config.MAGMA.get("processes", []),
@@ -277,7 +270,7 @@ class hil_lib(object):
                 sanity_pass_badge = config.MAGMA.get("sanity_pass_badge", None)
                 sanity_res_badge = config.MAGMA.get("sanity_res_badge", None)
                 if self.verdict(test_results):
-                    logging.info(f"Generating Badge for sanity pass")
+                    logging.info("Generating Badge for sanity pass")
                     self.create_badge(
                         cur_sw_ver, sanity_pass_badge, "HIL AGW tests stable", "green",
                     )
@@ -291,7 +284,7 @@ class hil_lib(object):
                         sanity_res_badge, ts=test_suite, c_type="image/svg+xml",
                     )
                 else:
-                    logging.info(f"Generating Badge for sanity failed")
+                    logging.info("Generating Badge for sanity failed")
                     self.create_badge(
                         "failing", sanity_res_badge, "HIL AGW tests", "red",
                     )
@@ -337,7 +330,7 @@ class hil_lib(object):
                     link=slack_config.get("dashboard"),
                 )
         self.cleanup()
-        logging.info(f"Completed Test Execution check test summary page")
+        logging.info("Completed Test Execution check test summary page")
 
     def check_and_get_file(self, tc_name: str) -> (bool, str):
         """
@@ -418,7 +411,7 @@ class hil_lib(object):
                 for cat, proc in v.items():
                     if cat not in excluded_cat_list:
                         for n in proc:
-                            if proc[n] == False:
+                            if proc[n] is False:
                                 fail_list.append(n)
             except Exception as e:
                 logging.error(f" failed to run test suite Error: {e} on object {v}")

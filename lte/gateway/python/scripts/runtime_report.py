@@ -23,12 +23,12 @@ from pathlib import Path
 
 
 def merge_all_report(working_dir, list_xml_report_paths, output_path):
-    """ 
+    """
     Given the paths of all xml report files, merge them all into a single report files
     Args:
         working_dir          : path of folder contains all the report files
         list_xml_report_paths: list of all the report xml files
-        output_path          : path of output report file in xml format 
+        output_path          : path of output report file in xml format
     """
     testsuites_node = ET.Element("testsuites")
 
@@ -39,7 +39,6 @@ def merge_all_report(working_dir, list_xml_report_paths, output_path):
     total_time = 0
     num_all_tests = 0
     init_time = datetime.max
-    c = 0
 
     # iterate through files
     for xml_file_path in list_xml_report_paths:
@@ -89,7 +88,7 @@ if __name__ == "__main__":
 
     magma_root_path = os.environ.get('MAGMA_ROOT')
     default_output_path = ((magma_root_path + "/report/merged_report/") if magma_root_path else "/tmp/magma_oai/report/") +\
-        f"report_all_tests.xml"
+        "report_all_tests.xml"
 
     parser = argparse.ArgumentParser(description="Merging all the .xml unittest reports into a single file")
     parser.add_argument('-w', '--working_dir', default=magma_root_path, help='Path of folder contains all report files', required=False)

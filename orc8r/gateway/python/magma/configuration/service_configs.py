@@ -83,7 +83,7 @@ def load_service_config(service_name: str) -> Any:
     return cfg
 
 
-cached_service_configs = {}     # type: Dict[str, Any]
+cached_service_configs: "Dict[str, Any]" = {}
 
 
 def get_service_config_value(service: str, param: str, default: Any) -> Any:

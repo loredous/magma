@@ -13,7 +13,6 @@ limitations under the License.
 
 
 import os
-import subprocess
 
 import boto3
 from cli.style import print_error_msg
@@ -86,7 +85,6 @@ def get_gateways(gateway_prefix: str = "agw"):
         )
         for reservation in instance_info["Reservations"]:
             gateway_id = ""
-            hostname = ""
             for instance in reservation["Instances"]:
                 for tags in instance["Tags"]:
                     if tags["Key"] == "Name":
@@ -102,7 +100,6 @@ def get_gateways(gateway_prefix: str = "agw"):
 
 def get_bastion_ip(gateway_prefix: str = "agw"):
     client = boto3.client('ec2')
-    gateways = []
     try:
         instance_info = client.describe_instances(
             Filters=[
@@ -131,7 +128,7 @@ def verify_resources_exist(uuid: str = None):
         uuid (str, optional): unique id to identify cluster. Defaults to None.
     """
     client = boto3.client('resourcegroupstaggingapi')
-    tagFilters = []
+    tag_filters = []
     if uuid:
         tag_filters = [{
             'Key': 'magma-uuid',

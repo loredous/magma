@@ -107,7 +107,7 @@ class EnforcementTableTest(unittest.TestCase):
 
     def test_enforcemnet_rules(self):
         """
-        Add QOS policy to enforcement table into OVS. 
+        Add QOS policy to enforcement table into OVS.
         """
         fake_controller_setup(self.enforcement_controller)
         imsi = 'IMSI001010000000013'

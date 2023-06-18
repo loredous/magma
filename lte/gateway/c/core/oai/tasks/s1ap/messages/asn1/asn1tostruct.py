@@ -29,7 +29,6 @@
 import datetime
 import getopt
 import getpass
-import os
 import re
 import string
 import sys
@@ -148,7 +147,7 @@ def usage():
 
 try:
     opts, args = getopt.getopt(sys.argv[1:], "df:ho:", ["debug", "file", "help", "outdir"])
-except getopt.GetoptError as err:
+except getopt.GetoptError:
     # print help information and exit:
     usage()
     sys.exit(2)
@@ -224,7 +223,7 @@ outputHeaderToFile(f, filename)
 f.write("#include \"%s_common.h\"\n\n" % (fileprefix))
 f.write("#ifndef %s_IES_DEFS_H_\n#define %s_IES_DEFS_H_\n\n" % (fileprefix.upper(), fileprefix.upper()))
 f.write("/* Define the version of script used to generate this file */\n")
-f.write("#define %s_SCRIPT_VERSION (%s)\n\n" % (fileprefix.upper(), re.sub('\.', '', version)))
+f.write("#define %s_SCRIPT_VERSION (%s)\n\n" % (fileprefix.upper(), re.sub(r'\.', '', version)))
 
 for key in iesDefs:
 
@@ -698,8 +697,8 @@ for key in iesDefs:
 
     f.write("    %s_IE_t *ie;\n\n" % (fileprefix_first_upper))
 
-    f.write("    assert(%s != NULL);\n" % (firstwordlower));
-    f.write("    assert(%s != NULL);\n\n" % (lowerFirstCamelWord(re.sub('-', '_', key))));
+    f.write("    assert(%s != NULL);\n" % (firstwordlower))
+    f.write("    assert(%s != NULL);\n\n" % (lowerFirstCamelWord(re.sub('-', '_', key))))
 
     for ie in iesDefs[key]["ies"]:
         iename = re.sub('-', '_', re.sub('id-', '', ie[0]))
@@ -714,7 +713,7 @@ for key in iesDefs:
             elif ie[3] == "conditional":
                 f.write("    /* Conditional field */\n")
             f.write("    if (%s->presenceMask & %s_%s_PRESENT) {\n\n" % (lowerFirstCamelWord(re.sub('-', '_', key)), keyupperunderscore, ieupperunderscore))
-            #f.write("        == %s_%s_PRESENT) {\n" % (keyupperunderscore, ieupperunderscore))
+            # f.write("        == %s_%s_PRESENT) {\n" % (keyupperunderscore, ieupperunderscore))
             if ie[2] in ieofielist.keys():
                 f.write("       %s_t %s;\n" % (ietypeunderscore, ienamefirstwordlower))
                 f.write("       memset(&%s, 0, sizeof(%s_t));\n" % (ienamefirstwordlower, ietypeunderscore))
@@ -723,7 +722,7 @@ for key in iesDefs:
             f.write("       if ((ie = %s_new_ie(%s_ProtocolIE_ID_%s,\n" % (fileprefix, fileprefix_first_upper, re.sub('-', '_', ie[0])))
             f.write("                            %s_Criticality_%s,\n" % (fileprefix_first_upper, ie[1]))
             f.write("                            &asn_DEF_%s,\n" % (ietypeunderscore))
-            #f.write("                            &%s->%s)) == NULL) {\n" % (lowerFirstCamelWord(re.sub('-', '_', key)), ienamefirstwordlower))
+            # f.write("                            &%s->%s)) == NULL) {\n" % (lowerFirstCamelWord(re.sub('-', '_', key)), ienamefirstwordlower))
             if ie[2] in ieofielist.keys():
                 f.write("                          &%s)) == NULL) {\n" % (ienamefirstwordlower))
             else:
@@ -778,8 +777,8 @@ for (key, value) in iesDefs.items():
 
     f.write("    %s_IE_t *ie;\n\n" % (fileprefix_first_upper))
 
-    f.write("    assert(%s != NULL);\n" % (firstwordlower));
-    f.write("    assert(%sIEs != NULL);\n\n" % (lowerFirstCamelWord(re.sub('-', '_', i))));
+    f.write("    assert(%s != NULL);\n" % (firstwordlower))
+    f.write("    assert(%sIEs != NULL);\n\n" % (lowerFirstCamelWord(re.sub('-', '_', i))))
 
     f.write("    for (i = 0; i < %sIEs->%s.count; i++) {\n" % (firstwordlower, re.sub('IEs', '', lowerFirstCamelWord(re.sub('-', '_', key)))))
     f.write("        if ((ie = %s_new_ie(%s_ProtocolIE_ID_%s,\n" % (fileprefix, fileprefix_first_upper, re.sub('-', '_', ie[0])))
@@ -872,7 +871,7 @@ for (key, value) in iesDefs.items():
         f.write("asn_enc_rval_t %s_xer_print_%s(\n" % (fileprefix, re.sub('ies', '', re.sub('item', 'list', re.sub('-', '_', key).lower()))))
     else:
         f.write("asn_enc_rval_t %s_xer_print_%s(\n" % (fileprefix, re.sub('ies', '', re.sub('-', '_', key).lower())))
-    #f.write("    FILE *file,\n")
+    # f.write("    FILE *file,\n")
     f.write("    asn_app_consume_bytes_f *cb,\n")
     f.write("    void *app_key,\n")
     if key in ieofielist.values():
@@ -884,15 +883,15 @@ for (key, value) in iesDefs.items():
         f.write("    %s_message *message_p)\n{\n" % (fileprefix))
         f.write("    %s_t *%s;\n" % (re.sub('-', '_', key), iesStructName))
         f.write("    asn_enc_rval_t er;\n")
-        #f.write("    void *app_key = (void *)file;\n")
-        #f.write("    asn_app_consume_bytes_f *cb = %s_xer__print2fp;\n\n" % (fileprefix.lower()))
+        # f.write("    void *app_key = (void *)file;\n")
+        # f.write("    asn_app_consume_bytes_f *cb = %s_xer__print2fp;\n\n" % (fileprefix.lower()))
 
         f.write("    %s = &message_p->msg.%s;\n\n" % (iesStructName, iesStructName))
 
     if key in ieofielist.values():
         # Increase indentation level
         f.write("    for (i = 0; i < %s->%s.count; i++) {\n" % (iesStructName, re.sub('IEs', '', lowerFirstCamelWord(re.sub('-', '_', key)))))
-        #f.write("        xer_fprint(file, &asn_DEF_%s, %s->%s.array[i]);\n" % (ietypeunderscore, iesStructName, re.sub('IEs', '', lowerFirstCamelWord(re.sub('-', '_', key)))))
+        # f.write("        xer_fprint(file, &asn_DEF_%s, %s->%s.array[i]);\n" % (ietypeunderscore, iesStructName, re.sub('IEs', '', lowerFirstCamelWord(re.sub('-', '_', key)))))
         f.write("        er = xer_encode(&asn_DEF_%s, %s->%s.array[i], XER_F_BASIC, cb, app_key);\n" % (ietypeunderscore, iesStructName, re.sub('IEs', '', lowerFirstCamelWord(re.sub('-', '_', key)))))
         f.write("    }\n")
     else:
@@ -926,6 +925,6 @@ for (key, value) in iesDefs.items():
 
     f.write("    _ASN_ENCODED_OK(er);\n")
     # if key not in ieofielist.values():
-        # f.write("cb_failed:\n")
-        #f.write("    return er;\n")
+    #    f.write("cb_failed:\n")
+    #    f.write("    return er;\n")
     f.write("}\n\n")

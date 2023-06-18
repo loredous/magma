@@ -89,7 +89,7 @@ class AWSCluster(object):
             print(f"Running playbook {playbook}")
             rc = run_playbook(playbook)
             if rc != 0:
-                raise ClusterDestroyError(f"Failed destroying cluster")
+                raise ClusterDestroyError("Failed destroying cluster")
 
     def destroy_orc8r(self):
         rc = tf_destroy(self.constants, warn=False)
@@ -187,7 +187,7 @@ class AWSClusterFactory():
             extra_vars=cstrap_dict,
         )
 
-        jump_config_dict = {"agws": f"tag_Name_TestClusterBridge"}
+        jump_config_dict = {"agws": "tag_Name_TestClusterBridge"}
         jump_config_dict.update(cstrap_dict)
         test_ssh_configure = AnsiblePlay(
             playbook=f"{playbook_dir}/cluster-provision.yaml",
@@ -292,18 +292,18 @@ class AWSClusterFactory():
             logging.debug("Adding self signed and application certs")
             rc = run_playbook(certs_cmd(constants, self_signed=True))
             if rc != 0:
-                raise ClusterCreateError(f"Failed running adding certs")
+                raise ClusterCreateError("Failed running adding certs")
 
         if not skip_precheck:
             logging.debug("Running installation prechecks")
             rc = run_playbook(precheck_cmd(constants))
             if rc != 0:
-                raise ClusterCreateError(f"Failed running prechecks")
+                raise ClusterCreateError("Failed running prechecks")
 
         # create the orc8r cluster
         rc = tf_install(constants, warn=False)
         if rc != 0:
-            raise ClusterCreateError(f"Failed installing cluster")
+            raise ClusterCreateError("Failed installing cluster")
 
         # update dns record for parent domain
         dns_dict = {
@@ -312,14 +312,14 @@ class AWSClusterFactory():
         dns_dict.update(constants)
         rc = run_playbook(
             AnsiblePlay(
-            playbook=f"{constants['playbooks']}/main.yml",
-            tags=['update_dns_records'],
-            extra_vars=dns_dict,
+                playbook=f"{constants['playbooks']}/main.yml",
+                tags=['update_dns_records'],
+                extra_vars=dns_dict,
             ),
         )
         if rc != 0:
             raise ClusterCreateError(
-                f"Failed updating dns records for parent domain",
+                "Failed updating dns records for parent domain",
             )
 
         cluster_config_dict = {

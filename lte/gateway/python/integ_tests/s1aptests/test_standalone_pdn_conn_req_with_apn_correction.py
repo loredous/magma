@@ -12,7 +12,6 @@ limitations under the License.
 """
 
 import ctypes
-import time
 import unittest
 
 import s1ap_types

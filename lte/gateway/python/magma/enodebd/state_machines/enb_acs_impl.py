@@ -173,7 +173,7 @@ class BasicEnodebAcsStateMachine(EnodebAcsStateMachine):
             self.fw_upgrade_timeout_handler = None
 
     def is_fw_upgrade_in_progress(self) -> bool:
-        return self.fw_upgrade_timeout_handler != None
+        return self.fw_upgrade_timeout_handler is not None
 
     def _start_state_machine(
             self,

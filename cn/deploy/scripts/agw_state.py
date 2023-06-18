@@ -1,10 +1,8 @@
 from flask import Flask, Response
 from prometheus_client import (
     CollectorRegistry,
-    Gauge,
     generate_latest,
     multiprocess,
-    start_http_server,
 )
 
 app = Flask(__name__)

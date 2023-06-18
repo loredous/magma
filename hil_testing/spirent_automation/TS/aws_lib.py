@@ -12,8 +12,6 @@ limitations under the License.
 """
 import logging
 import os
-import sys
-from typing import Dict, List, Tuple, Union
 
 import attr
 import boto3
@@ -56,9 +54,9 @@ class AWSbase(object):
                 database=config.RDS.get("database"),
                 cursorclass=pymysql.cursors.DictCursor,
             )
-        except:
+        except Exception:
             logging.error(
-                f"ERROR: Unexpected error: Counld not connect to MySql instance.",
+                "ERROR: Unexpected error: Counld not connect to MySql instance.",
             )
             raise
 

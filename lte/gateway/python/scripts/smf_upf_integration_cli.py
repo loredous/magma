@@ -15,10 +15,7 @@ limitations under the License.
 
 import argparse
 
-from lte.protos.apn_pb2 import AggregatedMaximumBitrate
 from lte.protos.policydb_pb2 import (
-    FlowDescription,
-    FlowMatch,
     FlowQos,
     PolicyRule,
     QosArp,

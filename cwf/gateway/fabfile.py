@@ -18,7 +18,7 @@ from enum import Enum
 from fabric import Connection, task
 
 sys.path.append('../../orc8r')
-from tools.fab.hosts import ansible_setup, vagrant_connection
+from tools.fab.hosts import ansible_setup, vagrant_connection  # noqa: E402 -- Import done with sys.path.append
 
 CWAG_ROOT = "$MAGMA_ROOT/cwf/gateway"
 CWAG_INTEG_ROOT = "$MAGMA_ROOT/cwf/gateway/integ_tests"

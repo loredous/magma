@@ -632,7 +632,7 @@ class RedirectionManager:
         matches = []
         uplink_ip_match = {}
         downlink_ip_match = {}
-        if ue_ip != None:
+        if ue_ip is not None:
             uplink_ip_match['ipv4_src'] = ue_ip
             downlink_ip_match['ipv4_dst'] = ue_ip
         for ip in ips:

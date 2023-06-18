@@ -21,7 +21,6 @@ from unittest import TestCase, main
 from unittest.mock import patch
 
 import configlib
-import utils.awslib
 import yaml
 from utils.common import get_json
 

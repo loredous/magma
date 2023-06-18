@@ -665,7 +665,6 @@ class EnforcementStatsTest(unittest.TestCase):
         )
         imsi = 'IMSI001010000000013'
         sub_ip = '192.168.128.74'
-        num_pkts_tx_match = 128
 
         flow_list = [
             FlowDescription(

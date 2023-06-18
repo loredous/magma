@@ -394,9 +394,9 @@ get_action_instruction",
         self.assertTrue(error_msg in cm.output[-1])
 
         # now only imsi2 should remain
-        assert(len(qos_mgr._subscriber_state) == 1)
-        assert(len(qos_mgr._subscriber_state['2'].rules) == 1)
-        assert(len(qos_mgr._subscriber_state['2'].rules[0]) == 1)
+        assert len(qos_mgr._subscriber_state) == 1
+        assert len(qos_mgr._subscriber_state['2'].rules) == 1
+        assert len(qos_mgr._subscriber_state['2'].rules[0]) == 1
         existing_qid = qos_mgr._subscriber_state['2'].rules[0][0][1]
         _, existing_qid, _, _ = get_data(existing_qid)
 
@@ -918,8 +918,8 @@ class TestTrafficClass(unittest.TestCase):
         filter_output = subprocess.check_output(['tc', 'filter', 'show', 'dev', intf])
         filter_list = filter_output.decode('utf-8').split("\n")
         filter_list = [ln for ln in filter_list if 'classid' in ln]
-        assert('classid 1:{qid}'.format(qid=parent_qid) in filter_list[0])
-        assert('classid 1:{qid}'.format(qid=qid) in filter_list[1])
+        assert 'classid 1:{qid}'.format(qid=parent_qid) in filter_list[0]
+        assert 'classid 1:{qid}'.format(qid=qid) in filter_list[1]
 
         # check if classes are installed with appropriate bandwidth limits
         class_output = subprocess.check_output(['tc', 'class', 'show', 'dev', intf])
@@ -931,15 +931,15 @@ class TestTrafficClass(unittest.TestCase):
             if 'class htb 1:{qid}'.format(qid=parent_qid) in info:
                 parent_class = info
 
-        assert(parent_class and 'ceil 1Mbit' in parent_class)
-        assert(child_class and 'rate 250Kbit ceil 500Kbit' in child_class)
+        assert parent_class and 'ceil 1Mbit' in parent_class
+        assert child_class and 'rate 250Kbit ceil 500Kbit' in child_class
 
         # check if fq_codel is associated only with the leaf class
         qdisc_output = subprocess.check_output(['tc', 'qdisc', 'show', 'dev', intf])
 
         # check if read_all_classes work
         qid_list = TrafficClass.read_all_classes(intf)
-        assert((qid, parent_qid) in qid_list)
+        assert (qid, parent_qid) in qid_list
 
         # delete leaf class
         TrafficClass.delete_class(intf, 3)
@@ -947,13 +947,7 @@ class TestTrafficClass(unittest.TestCase):
         # check class for qid 3 removed
         class_output = subprocess.check_output(['tc', 'class', 'show', 'dev', intf])
         class_list = class_output.decode('utf-8').split("\n")
-        assert(
-            not [
-                info for info in class_list if 'class htb 1:{qid}'.format(
-                    qid=qid,
-                ) in info
-            ]
-        )
+        assert not [info for info in class_list if 'class htb 1:{qid}'.format(qid=qid) in info]
 
         # delete APN AMBR class
         TrafficClass.delete_class(intf, 2)
@@ -961,13 +955,7 @@ class TestTrafficClass(unittest.TestCase):
         # verify that parent class is removed
         class_output = subprocess.check_output(['tc', 'class', 'show', 'dev', intf])
         class_list = class_output.decode('utf-8').split("\n")
-        assert(
-            not [
-                info for info in class_list if 'class htb 1:{qid}'.format(
-                    qid=parent_qid,
-                ) in info
-            ]
-        )
+        assert not [info for info in class_list if 'class htb 1:{qid}'.format(qid=parent_qid) in info]
 
         # check if no fq_codel nor filter exists
         qdisc_output = subprocess.check_output(['tc', 'qdisc', 'show', 'dev', intf])
@@ -976,7 +964,7 @@ class TestTrafficClass(unittest.TestCase):
         filter_list = [ln for ln in filter_list if 'classid' in ln]
         qdisc_list = qdisc_output.decode('utf-8').split("\n")
         qdisc_list = [ln for ln in qdisc_list if 'fq_codel' in ln]
-        assert(not filter_list and not qdisc_list)
+        assert not filter_list and not qdisc_list
 
         # destroy all qos on intf
         run_cmd(['tc qdisc del dev {intf} root'.format(intf=intf)])
@@ -990,22 +978,22 @@ class TestSubscriberState(unittest.TestCase):
 
         # add rule
         subscriber_state = SubscriberState('IMSI101', {})
-        assert(subscriber_state.check_empty())
-        assert(not subscriber_state.get_qos_handle(rule_num, d))
+        assert subscriber_state.check_empty()
+        assert not subscriber_state.get_qos_handle(rule_num, d)
         subscriber_state.update_rule(ip_addr, rule_num, d, qos_handle, 0, 0)
 
-        assert(subscriber_state.find_rule(rule_num))
+        assert subscriber_state.find_rule(rule_num)
         session_with_rule = subscriber_state.find_session_with_rule(rule_num)
-        assert(session_with_rule)
+        assert session_with_rule
 
         # remove rule
         subscriber_state.remove_rule(rule_num)
         empty_sessions = subscriber_state.get_all_empty_sessions()
-        assert(len(empty_sessions) == 1)
-        assert(session_with_rule == empty_sessions[0])
+        assert len(empty_sessions) == 1
+        assert session_with_rule == empty_sessions[0]
 
         subscriber_state.remove_session(ip_addr)
-        assert(subscriber_state.check_empty())
+        assert subscriber_state.check_empty()
 
     def testSingleRuleWithApnAmbr(self):
         rule_num, d = 10, FlowMatch.UPLINK
@@ -1013,25 +1001,25 @@ class TestSubscriberState(unittest.TestCase):
         ambr_qos_handle = 5
         qos_handle = 10
         subscriber_state = SubscriberState('IMSI101', {})
-        assert(subscriber_state.check_empty())
-        assert(not subscriber_state.get_qos_handle(rule_num, d))
+        assert subscriber_state.check_empty()
+        assert not subscriber_state.get_qos_handle(rule_num, d)
 
         session = subscriber_state.get_or_create_session(ip_addr)
         session.set_ambr(d, ambr_qos_handle, 0)
         subscriber_state.update_rule(ip_addr, rule_num, d, qos_handle, 0, 0)
 
-        assert(subscriber_state.find_rule(rule_num))
+        assert subscriber_state.find_rule(rule_num)
         session_with_rule = subscriber_state.find_session_with_rule(rule_num)
-        assert(session_with_rule)
+        assert session_with_rule
 
         # remove rule
         subscriber_state.remove_rule(rule_num)
         empty_sessions = subscriber_state.get_all_empty_sessions()
-        assert(len(empty_sessions) == 1)
-        assert(session_with_rule == empty_sessions[0])
+        assert len(empty_sessions) == 1
+        assert session_with_rule == empty_sessions[0]
 
         subscriber_state.remove_session(ip_addr)
-        assert(subscriber_state.check_empty())
+        assert subscriber_state.check_empty()
 
     def testMultipleRuleWithApnAmbr(self):
         rule_num1, d1 = 10, FlowMatch.UPLINK
@@ -1044,8 +1032,8 @@ class TestSubscriberState(unittest.TestCase):
         qos_handle3 = 30
 
         subscriber_state = SubscriberState('IMSI101', {})
-        assert(subscriber_state.check_empty())
-        assert(not subscriber_state.get_qos_handle(rule_num1, d1))
+        assert subscriber_state.check_empty()
+        assert not subscriber_state.get_qos_handle(rule_num1, d1)
 
         subscriber_state.get_or_create_session(ip_addr)
         subscriber_state.update_rule(ip_addr, rule_num1, d1, qos_handle1, 0, 0)
@@ -1055,23 +1043,23 @@ class TestSubscriberState(unittest.TestCase):
 
         # add rule_num3 with apn_ambr in downlink direction
         session = subscriber_state.get_or_create_session(ip_addr)
-        assert(session)
+        assert session
         session.set_ambr(d3, ambr_qos_handle, 0)
         subscriber_state.update_rule(ip_addr, rule_num3, d3, qos_handle3, 0, 0)
 
-        assert(len(subscriber_state.rules) == 2)
-        assert(rule_num1 in subscriber_state.rules)
-        assert(rule_num2 in subscriber_state.rules)
-        assert(len(subscriber_state.sessions) == 1)
+        assert len(subscriber_state.rules) == 2
+        assert rule_num1 in subscriber_state.rules
+        assert rule_num2 in subscriber_state.rules
+        assert len(subscriber_state.sessions) == 1
 
         subscriber_state.remove_rule(rule_num1)
-        assert(not subscriber_state.get_all_empty_sessions())
+        assert not subscriber_state.get_all_empty_sessions()
 
         subscriber_state.remove_rule(rule_num2)
         session = subscriber_state.get_all_empty_sessions()
-        assert(len(session) == 1)
+        assert len(session) == 1
         subscriber_state.remove_session(session[0].ip_addr)
-        assert(subscriber_state.check_empty())
+        assert subscriber_state.check_empty()
 
     def testMultipleSessionsWithMultipleRulesAmbr(self):
         # session1 information
@@ -1091,8 +1079,8 @@ class TestSubscriberState(unittest.TestCase):
         new_qos_handle1 = 110
 
         subscriber_state = SubscriberState('IMSI101', {})
-        assert(subscriber_state.check_empty())
-        assert(not subscriber_state.get_qos_handle(rule_num1, d1))
+        assert subscriber_state.check_empty()
+        assert not subscriber_state.get_qos_handle(rule_num1, d1)
 
         subscriber_state.get_or_create_session(ip_addr)
         subscriber_state.update_rule(ip_addr, rule_num1, d1, qos_handle1, 0, 0)
@@ -1102,38 +1090,38 @@ class TestSubscriberState(unittest.TestCase):
 
         # add rule_num3 with apn_ambr in downlink direction
         session = subscriber_state.get_or_create_session(ip_addr)
-        assert(session)
+        assert session
         session.set_ambr(d3, ambr_qos_handle, 0)
         subscriber_state.update_rule(ip_addr, rule_num3, d3, qos_handle3, 0, 0)
 
         # add rule_num4 with apn_ambr in uplink direction
         session = subscriber_state.get_or_create_session(new_session_ip_addr)
-        assert(session)
+        assert session
         session.set_ambr(new_d1, new_ambr_qos_handle, 0)
         subscriber_state.update_rule(
             new_session_ip_addr, new_rule_num4, new_d1,
             new_qos_handle1, 0, 0,
         )
 
-        assert(len(subscriber_state.rules) == 3)
-        assert(rule_num1 in subscriber_state.rules)
-        assert(rule_num2 in subscriber_state.rules)
-        assert(new_rule_num4 in subscriber_state.rules)
-        assert(len(subscriber_state.sessions) == 2)
+        assert len(subscriber_state.rules) == 3
+        assert rule_num1 in subscriber_state.rules
+        assert rule_num2 in subscriber_state.rules
+        assert new_rule_num4 in subscriber_state.rules
+        assert len(subscriber_state.sessions) == 2
 
         # remove the rules
         subscriber_state.remove_rule(rule_num1)
-        assert(not subscriber_state.get_all_empty_sessions())
+        assert not subscriber_state.get_all_empty_sessions()
 
         subscriber_state.remove_rule(rule_num2)
         session = subscriber_state.get_all_empty_sessions()
-        assert(len(session) == 1)
+        assert len(session) == 1
         subscriber_state.remove_session(session[0].ip_addr)
-        assert(not subscriber_state.check_empty())
+        assert not subscriber_state.check_empty()
 
         # remove the new session
         subscriber_state.remove_rule(new_rule_num4)
         session = subscriber_state.get_all_empty_sessions()
-        assert(len(session) == 1)
+        assert len(session) == 1
         subscriber_state.remove_session(session[0].ip_addr)
-        assert(subscriber_state.check_empty())
+        assert subscriber_state.check_empty()

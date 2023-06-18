@@ -157,7 +157,7 @@ def _match_gtp_lines(lines):
         line_remote_ip_match = interface_tx_rx_stats_re.match(line)
         if line_remote_ip_match:
             match_dict = line_remote_ip_match.groupdict()
-            if not 'remote_ip' in match_dict:
+            if 'remote_ip' not in match_dict:
                 match_dict['remote_ip'] = ""
             line_matches.append(match_dict)
     return line_matches

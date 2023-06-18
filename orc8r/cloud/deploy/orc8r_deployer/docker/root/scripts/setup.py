@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 setup(
     name='orcl',

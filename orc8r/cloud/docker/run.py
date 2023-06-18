@@ -78,18 +78,18 @@ def _clear_line(file: str, search: str) -> None:
     with open(file, 'r') as f:
         lines = f.readlines()
     with open(file, 'w') as f:
-        for l in lines:
-            if search not in l:
-                f.write(l)
+        for line in lines:
+            if search not in line:
+                f.write(line)
 
 
 def _add_or_replace_line(file: str, search: str, replace: str) -> None:
     found = False
-    for l in fileinput.input(file, inplace=1):
-        if search in l:
+    for line in fileinput.input(file, inplace=1):
+        if search in line:
             found = True
-            l = replace
-        sys.stdout.write(l)
+            line = replace
+        sys.stdout.write(line)
     if not found:
         with open(file, 'a') as f:
             f.write(replace)

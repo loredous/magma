@@ -100,6 +100,6 @@ if __name__ == '__main__':
     if not actual_vars.issubset(existing_vars):
         diff = actual_vars.difference(existing_vars)
         print(f"missing variable definitions {diff!r}")
-        assert(not diff)
+        assert not diff
 
     print("vars.yml found to be in sync with terraform modules")

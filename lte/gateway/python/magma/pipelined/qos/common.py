@@ -492,7 +492,8 @@ class QosManager(object):
                 return self.impl.get_action_instruction(qos_handle)
             return None, None, None
 
-    def remove_subscriber_qos(self, imsi: str = "", del_rule_num: int = -1):
+    # TODO: Method needs to be simplified for readability
+    def remove_subscriber_qos(self, imsi: str = "", del_rule_num: int = -1): # noqa C901
         with self._lock:
             if not self._qos_enabled or not self._initialized:
                 LOG.debug("remove_subscriber_qos: not enabled or initialized")

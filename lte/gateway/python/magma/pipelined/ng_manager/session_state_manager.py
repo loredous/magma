@@ -64,7 +64,7 @@ class SessionStateManager:
 
         for pdr_entry in new_session.set_gr_pdr:
             # PDR Validation
-            if pdr_entry.HasField('pdi') == False or pdr_entry.pdr_id == 0:
+            if pdr_entry.HasField('pdi') is False or pdr_entry.pdr_id == 0:
                 offending_ie = OffendingIE(
                     identifier=pdr_entry.pdr_id,
                     version=pdr_entry.pdr_version,
@@ -154,5 +154,5 @@ class SessionStateManager:
             session_config_list.append(session_config_dict[index])
 
         session_config_msg = UPFSessionConfigState(upf_session_state=session_config_list)
-        if send_periodic_session_update(session_config_msg, sessiond_stub) == True:
+        if send_periodic_session_update(session_config_msg, sessiond_stub) is True:
             SessionStateManager.periodic_config_msg_count += 1

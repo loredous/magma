@@ -16,8 +16,6 @@ Script to trigger pre and post start commands for the Sctpd systemd unit
 """
 
 import argparse
-import sys
-from enum import Enum
 
 from magma.configuration.service_configs import (
     load_override_config,

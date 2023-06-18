@@ -105,7 +105,7 @@ class ArpTableTest(unittest.TestCase):
         to apps launched by using futures.
         """
         cls = ArpTableTest
-        #super(ArpTableTest, cls).setUpClass()
+        # super(ArpTableTest, cls).setUpClass()
         warnings.simplefilter('ignore')
         cls.service_manager = create_service_manager([], ['arpd'])
         cls._tbl_num = cls.service_manager.get_table_num(ArpController.APP_NAME)

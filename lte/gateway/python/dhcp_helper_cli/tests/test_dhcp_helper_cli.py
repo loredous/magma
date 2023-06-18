@@ -22,7 +22,6 @@ from dhcp_helper_cli.dhcp_helper_cli import (
     DhcpHelperCli,
     DHCPState,
     MacAddress,
-    release_arg_handler,
 )
 from scapy.layers.dhcp import BOOTP, DHCP
 from scapy.layers.l2 import Dot1Q, Ether

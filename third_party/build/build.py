@@ -19,7 +19,6 @@ import logging
 import os
 import re
 import subprocess
-import sys
 
 log = logging.getLogger(__name__)
 

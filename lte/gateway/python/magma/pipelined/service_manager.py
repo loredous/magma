@@ -558,7 +558,6 @@ class ServiceManager:
         for each static service.
         """
         static_services = self._magma_service.config['static_services']
-        nat_enabled = self._magma_service.config.get('nat_enabled', False)
         setup_type = self._magma_service.config.get('setup_type', None)
         if setup_type == 'LTE':
             static_services.append(self.__class__.UPLINK_BRIDGE_NAME)
@@ -647,7 +646,7 @@ class ServiceManager:
 
         if self._5G_flag_enable:
             contexts['rpc_stubs'].update({
-                'sessiond_setinterface': \
+                'sessiond_setinterface':
                 SetInterfaceForUserPlaneStub(sessiond_chan),
             })
 
@@ -708,7 +707,7 @@ class ServiceManager:
         Returns:
             Whether or not the app is enabled
         """
-        if self._5G_flag_enable == False:
+        if self._5G_flag_enable is False:
             return False
 
         return self._table_manager.is_ng_app_enabled(app_name)

@@ -15,9 +15,7 @@ import argparse
 import logging
 import os
 import sys
-import time
 from datetime import datetime
-from typing import Dict, List
 
 import config
 import pytz
@@ -30,8 +28,6 @@ sys.path.append(
         os.path.dirname(os.path.abspath(sys.path[0])), "Magma_Automations/scripts",
     ),
 )
-import base
-import get_ports
 
 LOG_FORMAT = "%(asctime)-15s HIL_AUTOMATION %(levelname)s %(message)s"
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
